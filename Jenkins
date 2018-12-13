@@ -10,9 +10,9 @@ branch = "development"
 source = "development"
 target = "stable"
 
-def label = "mypod-${UUID.randomUUID().toString()}"
+def label = "node-${UUID.randomUUID().toString()}"
 podTemplate(label: label) {
-    node(nodesewq) {
+    node(label) {
         stage('Run shell') {
             container('mycontainer') {
                 git url: repositoryUrl, credentialsId: "git-credentials", branch: branch
