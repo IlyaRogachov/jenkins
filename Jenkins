@@ -10,9 +10,7 @@ branch = "development"
 source = "development"
 target = "stable"
 
-node () {
+node (node) {
     git url: repositoryUrl, credentialsId: "git-credentials", branch: branch
     load script
 }
-
-
