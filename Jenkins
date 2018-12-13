@@ -10,11 +10,11 @@ branch = "development"
 source = "development"
 target = "stable"
 
-def label = "node-${UUID.randomUUID().toString()}"
+def label = "jenkins-${UUID.randomUUID().toString()}"
 podTemplate(label: label) {
     node(label) {
         stage('Run shell') {
-            container('mycontainer') {
+            container('jenkins') {
                 git url: repositoryUrl, credentialsId: "git-credentials", branch: branch
                 load script
             }
