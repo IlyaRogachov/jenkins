@@ -10,7 +10,15 @@ branch = "development"
 source = "development"
 target = "stable"
 
-node (node) {
-    git url: repositoryUrl, credentialsId: "git-credentials", branch: branch
-    load script
+def label = "mypod-${UUID.randomUUID().toString()}"
+podTemplate(label: label) {
+    node(node) {
+        stage('Run shell') {
+            container('mycontainer') {
+                git url: repositoryUrl, credentialsId: "git-credentials", branch: branch
+                load script
+            }
+        }
+    }
 }
+
