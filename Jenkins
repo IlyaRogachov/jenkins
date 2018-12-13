@@ -10,7 +10,7 @@ branch = "development"
 source = "development"
 target = "stable"
 
-node (jenkins-slave) {
+node () {
     git url: repositoryUrl, credentialsId: "git-credentials", branch: branch
     load script
 }
