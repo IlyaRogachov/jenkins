@@ -14,10 +14,9 @@ def label = "jenkins-${UUID.randomUUID().toString()}"
 podTemplate(label: label) {
     node(label) {
         stage('Run shell') {
-            container('jenkins') {
                 git url: repositoryUrl, credentialsId: "git-credentials", branch: branch
                 load script
-            }
+
         }
     }
 }
