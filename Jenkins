@@ -15,6 +15,7 @@ podTemplate(label: label) {
     node(label) {
         stage('Git clone') {
                sh '''#!/bin/bash
+                   ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
                    cd ~
                    git clone git@bitbucket.org:michael_murzakhanov/cryptosignaller.git
                    cd ~/cryptosignaller
