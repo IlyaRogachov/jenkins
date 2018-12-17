@@ -13,10 +13,13 @@ target = "stable"
 def label = "jenkins-${UUID.randomUUID().toString()}"
 podTemplate(label: label) {
     node(label) {
-        stage('Run shell') {
-                git url: repositoryUrl, credentialsId: "git-credentials", branch: branch
-                load script
-
+        stage('Git clone') {
+               bash '''!#/bin/bash
+                   cd ~
+                   git clone git@bitbucket.org:michael_murzakhanov/cryptosignaller.git
+                   cd ~/cryptosignaller
+                   ls -la
+               '''
         }
     }
 }
