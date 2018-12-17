@@ -14,7 +14,7 @@ def label = "jenkins-${UUID.randomUUID().toString()}"
 podTemplate(label: label) {
     node(label) {
         stage('Git clone') {
-               bash '''!#/bin/bash
+               bash '''#!/bin/bash
                    cd ~
                    git clone git@bitbucket.org:michael_murzakhanov/cryptosignaller.git
                    cd ~/cryptosignaller
