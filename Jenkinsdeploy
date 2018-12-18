@@ -49,7 +49,7 @@ analytics:
                     stage('Git checkout') {
                         def scmVars = checkout([
                                 $class                           : 'GitSCM',
-                                branches                         : [[name: '*/development']],
+                                branches                         : [[name: '*/master']],
                                 doGenerateSubmoduleConfigurations: false,
                                 extensions                       : [/*[$class: 'CleanBeforeCheckout']*/],
                                 submoduleCfg                     : [],
