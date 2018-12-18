@@ -67,8 +67,9 @@ analytics:
                     stage('Deployment') {
                         //sh ("${workspace}/devops/kube/config")
                         configFileProvider([configFile(fileId: 'kube-config', variable: 'kube_config')]) {
-                            sh("mkdir -p /root/.kube && cp ${kube_config} /root/.kube/config")
+                            sh("mkdir -p ~/.kube && cp ${kube_config} ~/.kube/config")
                         }
+                        sh("export KUBECONFIG=~/.kube/config")
                         sh("helm init --upgrade")
                         dir("${workspace}") {
                             def servicesList = (params.services != null) ? yamlParse("${params.services}") : null
