@@ -46,7 +46,7 @@ analytics:
                 cleanWs()
                 try {
 
-                    sh("helm init --upgrade")
+
                     def workspace = pwd()
                     stage('Git checkout') {
                         def scmVars = checkout([
@@ -69,6 +69,7 @@ analytics:
                         configFileProvider([configFile(fileId: 'kube-config', variable: 'kube_config')]) {
                             sh("mkdir -p /root/.kube && cp ${kube_config} /root/.kube/config")
                         }
+                        sh("helm init --upgrade")
                         dir("${workspace}") {
                             def servicesList = (params.services != null) ? yamlParse("${params.services}") : null
                             currentBuild.description += (servicesList.size() > 1) ? " | ${servicesList.size()} services will be deployed"
