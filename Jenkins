@@ -26,7 +26,7 @@ def label = "jenkins-${UUID.randomUUID().toString()}"
 
        stage('Build') {
 
-                 sh "mvn clean install -DskipTests=true"
+                 sh "/usr/bin/mvn clean install -DskipTests=true"
             }
     }
  }
