@@ -79,6 +79,7 @@ analytics:
                                         : " | ${servicesList.keySet().toArray()[0]} service will be deployed"
                                 servicesList.each {
                                     println " ${it.key} "
+                                    sh ("cd ${it.key} && ls")
                                 }
                             }
                         }
