@@ -71,14 +71,15 @@ analytics:
                         }
                         sh("export KUBECONFIG=~/.kube/config")
                         container('helm') {
-                            sh("helm init --upgrade && helm ls")
-                        }
-                        dir("${workspace}") {
-                            def servicesList = (params.services != null) ? yamlParse("${params.services}") : null
-                            currentBuild.description += (servicesList.size() > 1) ? " | ${servicesList.size()} services will be deployed"
-                                    : " | ${servicesList.keySet().toArray()[0]} service will be deployed"
-                            servicesList.each {
+                            sh("helm init --upgrade && helm ls && pwd && ls")
+
+                            dir("${workspace}") {
+                                def servicesList = (params.services != null) ? yamlParse("${params.services}") : null
+                                currentBuild.description += (servicesList.size() > 1) ? " | ${servicesList.size()} services will be deployed"
+                                        : " | ${servicesList.keySet().toArray()[0]} service will be deployed"
+                                servicesList.each {
                                     println " ${it.key} "
+                                }
                             }
                         }
                     }
