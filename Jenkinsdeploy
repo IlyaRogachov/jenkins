@@ -79,7 +79,7 @@ analytics:
                                         : " | ${servicesList.keySet().toArray()[0]} service will be deployed"
                                 servicesList.each {
                                     println " ${it.key} "
-                                    sh ("cd ${it.key} && ls")
+                                    sh ("helm delete ${it.key} --purge && helm install ${it.key} --name=${it.key} --namespace production")
                                 }
                             }
                         }
