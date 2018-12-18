@@ -41,7 +41,7 @@ analytics:
 
    // currentBuild.description = "Deployment: ${namespace}"
 
-    node("${slavename}")
+    node("jenkins")
             {
                 cleanWs()
                 try {
