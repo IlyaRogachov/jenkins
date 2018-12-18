@@ -1,0 +1,90 @@
+// Deploy_Backend_v2
+// http://172.30.0.177:8080/job/QA/job/Deploy_Backend_v2/
+// Repo URL: https://bitbucket.org/Femitelemedicine/devops.git
+// Script Path: jenkins_pipelines/Deploy_Backend_v2.groovy
+import org.yaml.snakeyaml.Yaml
+
+@NonCPS
+def yamlParse(def yamlText) {
+    new org.yaml.snakeyaml.Yaml().load(yamlText)
+}
+
+    properties([parameters([text(defaultValue: '''activator:
+  image: latest
+binance-connector:
+  image: latest
+bitfinex-connector:
+  image: latest
+bittrex-connector:
+  image: latest
+candle-generator:
+  image: latest
+gdax-connector:
+  image: latest
+history-storage:
+  image: latest
+marketcap-connector:
+  image: latest
+news-connector:
+  image: latest
+notification-service:
+  image: latest
+payment-service:
+  image: latest
+poloniex-connector:
+  image: latest
+web:
+  image: latest
+analytics:
+  image: latest''', description: '', name: 'services')])])
+
+
+   // currentBuild.description = "Deployment: ${namespace}"
+
+    node("${slavename}")
+            {
+                cleanWs()
+                try {
+                    def workspace = pwd()
+                    stage('Git checkout') {
+                        def scmVars = checkout([
+                                $class                           : 'GitSCM',
+                                branches                         : [[name: '*/development']],
+                                doGenerateSubmoduleConfigurations: false,
+                                extensions                       : [/*[$class: 'CleanBeforeCheckout']*/],
+                                submoduleCfg                     : [],
+                                userRemoteConfigs                : [[credentialsId: 'bitbucket-jenkins', url: 'https://IlyaRogachov@bitbucket.org/michael_murzakhanov/cryptosignaller.git']]
+                        ])
+
+                        stage('test') {
+                            println 'Code has been cloned current brach is: '
+                            println scmVars.GIT_BRANCH
+                        }
+                    }
+
+                    stage('Deployment') {
+                        //sh ("${workspace}/devops/kube/config")
+                        configFileProvider([configFile(fileId: 'kube-config', variable: 'kube_config')]) {
+                            sh("mkdir -p ~/.kube && cp ${kube_config} ~/.kube/config")
+                        }
+                        dir("${workspace}/devops") {
+                            def servicesList = (params.services != null) ? yamlParse("${params.services}") : null
+                            currentBuild.description += (servicesList.size() > 1) ? " | ${servicesList.size()} services will be deployed"
+                                    : " | ${servicesList.keySet().toArray()[0]} service will be deployed"
+                            servicesList.each {
+                                    println " ${it.key} "
+                            }
+                        }
+                    }
+
+//    sendReportToSlack(namespace, params.services)
+                    currentBuild.result = "SUCCESS"
+
+                } catch(e) {
+//    sendReportToSlack(namespace, params.services, e)
+                    currentBuild.result = "FAILED"
+                    println "error: " + e
+                    throw e
+                }
+            }
+
