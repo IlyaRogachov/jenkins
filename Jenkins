@@ -25,6 +25,7 @@ import groovy.json.JsonSlurperClassic
 
          stage('Build') {
              container('jenkins') {
+                 sh "pwd"
                  sh "/bin/bash mvn clean install -DskipTests=true"
              }
          }
