@@ -18,9 +18,18 @@ def label = "jenkins-${UUID.randomUUID().toString()}"
 
        stage('Git clone') {
            stage('test') {
-              println 'some text'
+              println 'Code has been cloned current brach is: '
               println scmVars.GIT_BRANCH
            }
         }
+
+
+       stage('Build') {
+
+           steps{
+               sh "mvn clean install -DskipTests=true"
+           }
+
+       }
     }
  }
