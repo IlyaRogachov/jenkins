@@ -33,8 +33,16 @@ def scmVars = checkout([
         submoduleCfg : [],
         userRemoteConfigs: [[credentialsId: 'bitbucket-jenkins', url: 'https://IlyaRogachov@bitbucket.org/michael_murzakhanov/cryptosignaller.git']]
 ])
-stage('test') {
-    println 'some text'
-    println scmVars.GIT_BRANCH
-}
 
+
+def label = "jenkins-${UUID.randomUUID().toString()}"
+ podTemplate(label: label) {
+   node(label) {
+       stage('Git clone') {
+           stage('test') {
+              println 'some text'
+              println scmVars.GIT_BRANCH
+           }
+        }
+    }
+ }
