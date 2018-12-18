@@ -41,10 +41,8 @@ pipeline {
     stages {
         stage('Docker node test') {
             agent {
-                docker {
-                    // Set both label and image
+                   // Set both label and image
                     label 'jenkins'
-                    args '--name docker-node' // list any args
                 }
             }
             steps {
