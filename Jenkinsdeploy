@@ -71,9 +71,8 @@ analytics:
                         }
                         sh("export KUBECONFIG=~/.kube/config")
                         container('helm') {
-                            sh("helm init --upgrade")
+                            sh("helm init --upgrade && helm ls")
                         }
-                        sh("helm ls")
                         dir("${workspace}") {
                             def servicesList = (params.services != null) ? yamlParse("${params.services}") : null
                             currentBuild.description += (servicesList.size() > 1) ? " | ${servicesList.size()} services will be deployed"
