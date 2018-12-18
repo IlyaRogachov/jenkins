@@ -8,21 +8,21 @@ script = "pipelines/meta-pipeline.groovy"
 branch = "development"
 def bitbucketCredsId = 'bitbucket-jenkins'
 
-/. def label = "jenkins-${UUID.randomUUID().toString()}"
-podTemplate(label: label) {
-    node(label) {
-        stage('Git clone') {
-               sh '''#!/bin/bash
+// def label = "jenkins-${UUID.randomUUID().toString()}"
+// podTemplate(label: label) {
+ //   node(label) {
+ //       stage('Git clone') {
+ //              sh '''#!/bin/bash
                    
-                   ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
-                   cd ~
-                   git clone git@bitbucket.org:michael_murzakhanov/cryptosignaller.git
-                   cd ~/cryptosignaller
-                   ls -la
-               '''
-        }
-    } 
-} ./
+                  // ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+                  // cd ~
+                  //  git clone git@bitbucket.org:michael_murzakhanov/cryptosignaller.git
+                  // cd ~/cryptosignaller
+                  //  ls -la
+//               '''
+//        }
+//    }
+// }
 
 
 def scmVars = checkout([
