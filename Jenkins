@@ -7,7 +7,7 @@ import groovy.json.JsonSlurperClassic
  podTemplate(label: label) {
    node(label) {
        def scmVars = checkout([
-               $class : 'GitSCM', */
+               $class : 'GitSCM',
                branches : [[name: '*/development']],
                doGenerateSubmoduleConfigurations: false,
                extensions : [/*[$class: 'CleanBeforeCheckout']*/],
