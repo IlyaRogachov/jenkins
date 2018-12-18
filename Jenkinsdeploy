@@ -53,7 +53,7 @@ analytics:
                                 doGenerateSubmoduleConfigurations: false,
                                 extensions                       : [/*[$class: 'CleanBeforeCheckout']*/],
                                 submoduleCfg                     : [],
-                                userRemoteConfigs                : [[credentialsId: 'bitbucket-jenkins', url: 'https://IlyaRogachov@bitbucket.org/michael_murzakhanov/cryptosignaller.git']]
+                                userRemoteConfigs                : [[credentialsId: 'bitbucket-jenkins', url: 'https://IlyaRogachov@bitbucket.org/IlyaRogachov/helm_charts.git']]
                         ])
 
                         stage('test') {
@@ -67,7 +67,7 @@ analytics:
                         configFileProvider([configFile(fileId: 'kube-config', variable: 'kube_config')]) {
                             sh("mkdir -p ~/.kube && cp ${kube_config} ~/.kube/config")
                         }
-                        dir("${workspace}/devops") {
+                        dir("${workspace}") {
                             def servicesList = (params.services != null) ? yamlParse("${params.services}") : null
                             currentBuild.description += (servicesList.size() > 1) ? " | ${servicesList.size()} services will be deployed"
                                     : " | ${servicesList.keySet().toArray()[0]} service will be deployed"
