@@ -3,16 +3,15 @@
 
 import groovy.json.JsonSlurperClassic
 
-/*  def label = "jenkins"
+  def label = "jenkins"
  podTemplate(label: label) {
    node(label) {
-
        def scmVars = checkout([
                $class : 'GitSCM', */
-//               branches : [[name: '*/development']],
-//               doGenerateSubmoduleConfigurations: false,
-//               extensions : [/*[$class: 'CleanBeforeCheckout']*/],
-/*               submoduleCfg : [],
+               branches : [[name: '*/development']],
+               doGenerateSubmoduleConfigurations: false,
+               extensions : [/*[$class: 'CleanBeforeCheckout']*/],
+               submoduleCfg : [],
                userRemoteConfigs: [[credentialsId: 'bitbucket-jenkins', url: 'https://IlyaRogachov@bitbucket.org/michael_murzakhanov/cryptosignaller.git']]
        ])
 
@@ -29,38 +28,4 @@ import groovy.json.JsonSlurperClassic
                  sh "/bin/bash mvn clean install -DskipTests=true"
             }
     }
- } */
-
-
-pipeline {
-    // Assign to docker slave(s) label, could also be 'any'
-    agent {
-        label 'jenkins'
-    }
-
-    stages {
-        stage('Docker node test') {
-            agent {
-                   // Set both label and image
-                    label 'jenkins'
-                }
-            }
-            steps {
-                // Steps run in node:7-alpine docker container on docker slave
-                sh 'node --version'
-            }
-        }
-
-        stage('Docker maven test') {
-            agent {
-                    // Set both label and image
-                    label 'docker'
-                    image 'maven:3-alpine'
-            }
-            steps {
-                // Steps run in maven:3-alpine docker container on docker slave
-                sh 'mvn --version'
-            }
-        }
-    }
-
+ }
