@@ -25,19 +25,19 @@ def bitbucketCredsId = 'bitbucket-jenkins'
 // }
 
 
-def scmVars = checkout([
-        $class : 'GitSCM',
-        branches : [[name: '*/development']],
-        doGenerateSubmoduleConfigurations: false,
-        extensions : [/*[$class: 'CleanBeforeCheckout']*/],
-        submoduleCfg : [],
-        userRemoteConfigs: [[credentialsId: 'bitbucket-jenkins', url: 'https://IlyaRogachov@bitbucket.org/michael_murzakhanov/cryptosignaller.git']]
-])
-
-
 def label = "jenkins-${UUID.randomUUID().toString()}"
  podTemplate(label: label) {
    node(label) {
+
+       def scmVars = checkout([
+               $class : 'GitSCM',
+               branches : [[name: '*/development']],
+               doGenerateSubmoduleConfigurations: false,
+               extensions : [/*[$class: 'CleanBeforeCheckout']*/],
+               submoduleCfg : [],
+               userRemoteConfigs: [[credentialsId: 'bitbucket-jenkins', url: 'https://IlyaRogachov@bitbucket.org/michael_murzakhanov/cryptosignaller.git']]
+       ])
+
        stage('Git clone') {
            stage('test') {
               println 'some text'
