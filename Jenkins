@@ -26,7 +26,7 @@ def label = "jenkins"
 
        stage('Build') {
 
-                 sh "/usr/bin/mvn clean install -DskipTests=true"
+                 sh "mvn clean install -DskipTests=true"
             }
     }
  }
