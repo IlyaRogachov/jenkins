@@ -6,15 +6,14 @@ import groovy.json.JsonSlurperClassic
 repositoryUrl = "https://github.com/buildit/jenkins-pipeline-examples.git"
 script = "pipelines/meta-pipeline.groovy"
 branch = "development"
+def bitbucketCredsId = 'bitbucket-jenkins'
 
-source = "development"
-target = "stable"
-
-def label = "jenkins-${UUID.randomUUID().toString()}"
+/. def label = "jenkins-${UUID.randomUUID().toString()}"
 podTemplate(label: label) {
     node(label) {
         stage('Git clone') {
                sh '''#!/bin/bash
+                   
                    ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
                    cd ~
                    git clone git@bitbucket.org:michael_murzakhanov/cryptosignaller.git
@@ -22,6 +21,20 @@ podTemplate(label: label) {
                    ls -la
                '''
         }
-    }
+    } 
+} ./
+
+
+def scmVars = checkout([
+        $class : 'GitSCM',
+        branches : [[name: '*/development']],
+        doGenerateSubmoduleConfigurations: false,
+        extensions : [/*[$class: 'CleanBeforeCheckout']*/],
+        submoduleCfg : [],
+        userRemoteConfigs: [[credentialsId: 'bitbucket-jenkins', url: 'https://IlyaRogachov@bitbucket.org/michael_murzakhanov/cryptosignaller.git']]
+])
+stage('test') {
+    println 'some text'
+    println scmVars.GIT_BRANCH
 }
 
