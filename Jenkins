@@ -6,7 +6,6 @@ import groovy.json.JsonSlurperClassic
  def label = "jenkins"
  podTemplate(label: label) {
      node(label) {
-         cleanWs()
          stage('Git copy') {
              def scmVars = checkout([
                      $class                           : 'GitSCM',
