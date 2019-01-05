@@ -7,8 +7,9 @@ import groovy.json.JsonSlurperClassic
  cleanWs()
  podTemplate(label: label) {
      node(label) {
-         stage('Git copy') {
-             def scmVars = checkout([
+     stage('Git copy') {
+         step ([$class: 'WsCleanup'])
+         def scmVars = checkout([
                      $class                           : 'GitSCM',
                      branches                         : [[name: '*/development']],
                      doGenerateSubmoduleConfigurations: false,
