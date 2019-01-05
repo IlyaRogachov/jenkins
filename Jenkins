@@ -3,11 +3,11 @@
 
 import groovy.json.JsonSlurperClassic
 
-  def label = "jenkins"
+ def label = "jenkins"
  podTemplate(label: label) {
      node(label) {
+         cleanWs()
          stage('Git copy') {
-             cleanWs()
              def scmVars = checkout([
                      $class                           : 'GitSCM',
                      branches                         : [[name: '*/development']],
@@ -16,7 +16,6 @@ import groovy.json.JsonSlurperClassic
                      submoduleCfg                     : [],
                      userRemoteConfigs                : [[credentialsId: 'bitbucket-jenkins', url: 'https://IlyaRogachov@bitbucket.org/michael_murzakhanov/cryptosignaller.git']]
              ])
-
 
              stage('test') {
                  println 'Code has been cloned current brach is: '
