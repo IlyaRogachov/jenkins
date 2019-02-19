@@ -12,7 +12,7 @@ import groovy.json.JsonSlurperClassic
          cleanWs()
          def scmVars = checkout([
                      $class                           : 'GitSCM',
-                     branches                         : [[name: '*/free_usage']],
+                     branches                         : [[name: '*/development']],
                      doGenerateSubmoduleConfigurations: false,
                      extensions                       : [/*[$class: 'CleanBeforeCheckout']*/],
                      submoduleCfg                     : [],
