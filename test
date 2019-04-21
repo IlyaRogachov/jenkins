@@ -1,4 +1,4 @@
-node('buildnet') {
+node('helm') {
   cleanWs()
   //  checkout([$class: 'GitSCM', branches: [[name: '*/development']],
   //            userRemoteConfigs: [[credentialsId: bitbucketCredsId, url: appRepo]]])
