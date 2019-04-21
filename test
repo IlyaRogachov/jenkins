@@ -3,8 +3,7 @@ node('buildnet') {
   //  checkout([$class: 'GitSCM', branches: [[name: '*/development']],
   //            userRemoteConfigs: [[credentialsId: bitbucketCredsId, url: appRepo]]])
     sh("pwd")
-  sh("sh 'export PATH=/bin/bash:$PATH'")
-  sh("whoami")
+    sh("whoami")
   sh("hostname")
   sh("ip a")
   sh("env")
