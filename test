@@ -9,7 +9,10 @@ node('helm') {
   sh("ip a")
   sh("env")
 
-  sh("helm init --upgrade && helm ls && pwd && ls")
+  container('helm') {
+    sh("helm init --upgrade && helm ls && pwd && ls")
+
+  }
 
 
   //sh("docker build .")
