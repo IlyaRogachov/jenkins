@@ -1,0 +1,24 @@
+node('buildnet') {
+  cleanWs()
+  //  checkout([$class: 'GitSCM', branches: [[name: '*/development']],
+  //            userRemoteConfigs: [[credentialsId: bitbucketCredsId, url: appRepo]]])
+    sh("pwd")
+  sh("sh 'export PATH=/bin/bash:$PATH'")
+  sh("whoami")
+  sh("hostname")
+  sh("ip a")
+  sh("env")
+  sh("dotnet")
+  //sh("docker build .")
+//  sh("whereis dotnet")
+  //  sh("dotnet publish ./Code/Acex.JourneySearch -c Release -o ~/dist")
+    sh("tail -f /dev/null")
+
+  //docker.withRegistry("https://${ecrRepo}", ecrCredsId) {
+  //    dir('jenkins-slaves/deploy/') {
+       // def customImage = docker.build("${ecrRepo}/jenkins/deploy:0.12")def customImage = docker.build("${ecrRepo}/jenkins/deploy:0.12")
+   //      customImage.push()
+  //    }
+  //}
+
+}
